@@ -67,8 +67,20 @@
             document.getElementById('d').innerHTML = y + '年' + mo + '月' + da + '日 星期' + wd;
         }
 
+        function initTimezone() {
+            var tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            var offset = new Date().getTimezoneOffset();
+            var sign = offset <= 0 ? '+' : '-';
+            var hours = Math.abs(offset / 60);
+            var minutes = Math.abs(offset % 60);
+            if (hours < 10) hours = '0' + hours;
+            if (minutes < 10) minutes = '0' + minutes;
+            document.getElementById('tz').innerHTML = tz + ' (UTC' + sign + hours + ':' + minutes + ')';
+        }
+
         // 初始化显示
         updateTime();
+        initTimezone();
         // 每60秒局部更新
         setInterval(updateTime, 60000);
     </script>
